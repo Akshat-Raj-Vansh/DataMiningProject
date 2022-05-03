@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:padac/common/custom_round_btn.dart';
+import 'package:padac/controllers/crop_controller.dart';
 import 'package:padac/pages/home/components/appbar.dart';
 import 'package:padac/pages/home/components/dashboard_btn.dart';
 import 'package:padac/services/auth/iauth_service.dart';
@@ -26,6 +28,13 @@ final dashboard = [
 ];
 
 class _HomeScreenState extends State<HomeScreen> {
+  final CropController cropController = Get.put(CropController());
+  @override
+  void initState() {
+    super.initState();
+    cropController.getValues();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,6 +75,72 @@ class _HomeScreenState extends State<HomeScreen> {
                               press: () {},
                             ),
                         itemCount: dashboard.length),
+                  ),
+                  SizedBox(height: 3.h),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          margin: EdgeInsets.symmetric(horizontal: 2.h),
+                          child: Text(
+                            'Predicted Crop',
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.jockeyOne(
+                                fontSize: 16.sp, color: kPrimaryColor),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        margin: EdgeInsets.symmetric(horizontal: 2.h),
+                        child: const Icon(
+                          Icons.keyboard_arrow_right,
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 1.h),
+                  Obx(
+                    () => Container(
+                      height: 20.h,
+                      width: 80.w,
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 2.h, vertical: 10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          border: Border.all(color: kLPrimaryColor, width: 2)),
+                      child: Center(
+                        child: Stack(
+                          children: [
+                            Image.asset(
+                              // cropController.dashboard[1] != "0"
+                              //     ? 'assets/crops/${cropController.dashboard[1]}.jpg'
+                              //     :
+                              'assets/crops/coconut.jpg',
+                              width: 80.w,
+                              height: 20.h,
+                              fit: BoxFit.fitWidth,
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                width: double.infinity,
+                                color: kSecondaryColor.withOpacity(0.5),
+                                child: Text(
+                                  cropController.dashboard[1].toUpperCase(),
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 16.sp, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(height: 3.h),
                   Row(
@@ -138,29 +213,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Container(
                     height: 60.h,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemBuilder: (ctx, index) => Container(
-                        height: 70,
-                        width: 70.w,
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 4.h, vertical: 5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border:
-                                Border.all(color: kLPrimaryColor, width: 2)),
-                        child: Center(
-                          child: Text(
-                            'Task ${index + 1}',
-                            textAlign: TextAlign.start,
-                            style: GoogleFonts.montserrat(
-                                fontSize: 12.sp, color: kPrimaryColor),
+                    child: GetX<CropController>(
+                      builder: (controller) => ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (ctx, index) => Container(
+                          height: 70,
+                          width: 70.w,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 4.h, vertical: 5),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              border:
+                                  Border.all(color: kLPrimaryColor, width: 2)),
+                          child: Center(
+                            child: Text(
+                              controller.dashboard[index],
+                              textAlign: TextAlign.start,
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 12.sp, color: kPrimaryColor),
+                            ),
                           ),
                         ),
+                        itemCount: cropController.dashboard.length,
                       ),
-                      itemCount: 5,
                     ),
                   ),
                 ],

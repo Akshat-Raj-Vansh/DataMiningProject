@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:padac/adapters/auth_page_adapter.dart';
 import 'package:padac/cache/ilocal_store.dart';
 import 'package:padac/cache/local_store.dart';
 import 'package:padac/controllers/auth_controller.dart';
@@ -28,7 +27,7 @@ class CompositionRoot {
   static Future<Widget> start() async {
     Token token = await localStore.getToken();
     // return token == null ? splashScreen() : createHomeUI();
-    return splashScreen();
+    return createHomeUI();
   }
 
   static Widget splashScreen() {

@@ -108,12 +108,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       // Get.to(() => RegisterScreen(),
                       //     transition: Transition.rightToLeftWithFade);
                       final FormState form = _formKey.currentState!;
-                      if (form.validate()) {
-                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //   content: Text('Welcome $_email'),
-                        // ));
-                        authController.login(_email, _password);
-                      }
+                      // if (form.validate()) {
+                      //   // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      //   //   content: Text('Welcome $_email'),
+                      //   // ));
+                      //   authController.login(_email, _password);
+                      // }
+                      authController.login(_email, _password);
                     },
                     op: 255,
                     color: kSecondaryColor,
