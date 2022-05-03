@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:padac/adapters/auth_page_adapter.dart';
 import 'package:padac/pages/splash/components/logo_desc.dart';
 import 'package:padac/utils/constants.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:padac/adapters/auth_page_adapter.dart';
 import 'package:padac/common/custom_round_btn.dart';
 import 'package:padac/pages/home/components/appbar.dart';
 import 'package:padac/pages/home/components/dashboard_btn.dart';

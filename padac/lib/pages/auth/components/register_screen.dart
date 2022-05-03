@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:padac/adapters/auth_page_adapter.dart';
 import 'package:padac/common/custom_round_btn.dart';
 import 'package:padac/common/custom_text_field.dart';
 import 'package:padac/pages/auth/components/logo_desc.dart';

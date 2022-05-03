@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 class Features {
-  final double pvalue;
-  final double nvalue;
-  final double kvalue;
-  final double ph;
-  final double temp;
-  final double humidity;
-  final double rainfall;
+  late double pvalue;
+  late double nvalue;
+  late double kvalue;
+  late double ph;
+  late double temp;
+  late double humidity;
+  late double rainfall;
   Features({
     required this.pvalue,
     required this.nvalue,
@@ -17,6 +17,16 @@ class Features {
     required this.humidity,
     required this.rainfall,
   });
+
+  Features.initialize() {
+    pvalue = 0.0;
+    nvalue = 0.0;
+    kvalue = 0.0;
+    ph = 0.0;
+    temp = 0.0;
+    humidity = 0.0;
+    rainfall = 0.0;
+  }
 
   Features copyWith({
     double? pvalue,
@@ -52,11 +62,11 @@ class Features {
 
   factory Features.fromMap(Map<String, dynamic> map) {
     return Features(
-      pvalue: map['pvalue']?.toDouble() ?? 0.0,
-      nvalue: map['nvalue']?.toDouble() ?? 0.0,
-      kvalue: map['kvalue']?.toDouble() ?? 0.0,
+      pvalue: map['P']?.toDouble() ?? 0.0,
+      nvalue: map['N']?.toDouble() ?? 0.0,
+      kvalue: map['K']?.toDouble() ?? 0.0,
       ph: map['ph']?.toDouble() ?? 0.0,
-      temp: map['temp']?.toDouble() ?? 0.0,
+      temp: map['temperature']?.toDouble() ?? 0.0,
       humidity: map['humidity']?.toDouble() ?? 0.0,
       rainfall: map['rainfall']?.toDouble() ?? 0.0,
     );

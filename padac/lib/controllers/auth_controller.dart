@@ -18,10 +18,10 @@ class AuthController extends GetxController {
   }
 
   Future<void> login(String email, String password) async {
-    // Get.to(
-    //   () => const HomeScreen(),
-    //   transition: Transition.rightToLeftWithFade,
-    //   duration: const Duration(milliseconds: 500),
-    // );
+    Get.to(
+      () => const HomeScreen(),
+      transition: Transition.rightToLeftWithFade,
+      duration: const Duration(milliseconds: 500),
+    );
   }
 }
