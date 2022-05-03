@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +7,12 @@ import 'package:padac/common/custom_round_btn.dart';
 import 'package:padac/controllers/crop_controller.dart';
 import 'package:padac/pages/home/components/appbar.dart';
 import 'package:padac/pages/home/components/dashboard_btn.dart';
+import 'package:padac/pages/home/components/humidity.dart';
+import 'package:padac/pages/home/components/ph.dart';
+import 'package:padac/pages/home/components/rainfall.dart';
+import 'package:padac/pages/home/components/soil_content.dart';
+import 'package:padac/pages/home/components/summary.dart';
+import 'package:padac/pages/home/components/temperature.dart';
 import 'package:padac/services/auth/iauth_service.dart';
 import 'package:padac/utils/constants.dart';
 import 'package:sizer/sizer.dart';
@@ -18,17 +26,21 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-final dashboard = [
-  'Summary',
-  'Soil Content',
-  'pH',
-  'Rainfall',
-  'Temperature',
-  'Humidity'
-];
-
 class _HomeScreenState extends State<HomeScreen> {
   final CropController cropController = Get.put(CropController());
+  final PageController pageController = PageController();
+
+  final dashboard = [
+    'Summary',
+    'Soil Content',
+    'pH',
+    'Rainfall',
+    'Temperature',
+    'Humidity'
+  ];
+
+  var _selected = 0;
+
   @override
   void initState() {
     super.initState();
@@ -47,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: EdgeInsets.only(top: 8.h + 40),
             child: SingleChildScrollView(
+              //   physics: const NeverScrollableScrollPhysics(),
               child: Column(
                 children: [
                   Container(
@@ -67,12 +80,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
-                        itemBuilder: (ctx, index) => DashBoardBtn(
-                              height: 4.h,
-                              op: 255,
-                              color: kSecondaryColor,
-                              text: dashboard[index],
-                              press: () {},
+                        itemBuilder: (ctx, index) => Obx(
+                              () => DashBoardBtn(
+                                height: 4.h,
+                                op: 255,
+                                color:
+                                    cropController.selectedPage.value != index
+                                        ? kPrimaryColor
+                                        : kSecondaryColor,
+                                text: dashboard[index],
+                                press: () {
+                                  cropController.changePage(index);
+                                  pageController.jumpToPage(
+                                    index,
+                                  );
+                                },
+                              ),
                             ),
                         itemCount: dashboard.length),
                   ),
@@ -116,10 +139,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Stack(
                           children: [
                             Image.asset(
-                              // cropController.dashboard[1] != "0"
-                              //     ? 'assets/crops/${cropController.dashboard[1]}.jpg'
-                              //     :
-                              'assets/crops/coconut.jpg',
+                              cropController.featureValue.isNotEmpty
+                                  ? 'assets/crops/${cropController.featureValue[1]}.jpg'
+                                  : 'assets/crops/apple.jpg',
                               width: 80.w,
                               height: 20.h,
                               fit: BoxFit.fitWidth,
@@ -130,7 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: double.infinity,
                                 color: kSecondaryColor.withOpacity(0.5),
                                 child: Text(
-                                  cropController.dashboard[1].toUpperCase(),
+                                  cropController.featureValue.isNotEmpty
+                                      ? cropController.featureValue[1]
+                                          .toUpperCase()
+                                      : 'Loading',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.montserrat(
                                       fontSize: 16.sp, color: Colors.white),
@@ -142,146 +167,65 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 3.h),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          margin: EdgeInsets.symmetric(horizontal: 2.h),
-                          child: Text(
-                            'Weather forecast',
-                            textAlign: TextAlign.start,
-                            style: GoogleFonts.jockeyOne(
-                                fontSize: 16.sp, color: kPrimaryColor),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        margin: EdgeInsets.symmetric(horizontal: 2.h),
-                        child: const Icon(
-                          Icons.keyboard_arrow_right,
-                          color: kPrimaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 1.h),
+                  SizedBox(height: 2.h),
                   Container(
-                    height: 100,
-                    width: 80.w,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    margin: EdgeInsets.symmetric(horizontal: 2.h, vertical: 10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        border: Border.all(color: kLPrimaryColor, width: 2)),
-                    child: Center(
-                      child: Text(
-                        'Today, 12th July 2020',
-                        textAlign: TextAlign.start,
-                        style: GoogleFonts.montserrat(
-                            fontSize: 12.sp, color: kPrimaryColor),
-                      ),
+                    height: 80.h,
+                    child: PageView(
+                      controller: pageController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: const [
+                        Summary(),
+                        SoilContent(),
+                        PH(),
+                        Rainfall(),
+                        Temperature(),
+                        Humidity(),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 3.h),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          margin: EdgeInsets.symmetric(horizontal: 2.h),
-                          child: Text(
-                            'Current tasks',
-                            textAlign: TextAlign.start,
-                            style: GoogleFonts.jockeyOne(
-                                fontSize: 16.sp, color: kPrimaryColor),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        margin: EdgeInsets.symmetric(horizontal: 2.h),
-                        child: const Icon(
-                          Icons.keyboard_arrow_right,
-                          color: kPrimaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 60.h,
-                    child: GetX<CropController>(
-                      builder: (controller) => ListView.builder(
-                        shrinkWrap: true,
-                        itemBuilder: (ctx, index) => Container(
-                          height: 70,
-                          width: 70.w,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 4.h, vertical: 5),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
-                              border:
-                                  Border.all(color: kLPrimaryColor, width: 2)),
-                          child: Center(
-                            child: Text(
-                              controller.dashboard[index],
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 12.sp, color: kPrimaryColor),
-                            ),
-                          ),
-                        ),
-                        itemCount: cropController.dashboard.length,
-                      ),
-                    ),
-                  ),
+                  SizedBox(height: 2.h),
                 ],
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 8.h,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
-              decoration: BoxDecoration(
-                color: kLightBGColor,
-                border: Border.all(color: kLPrimaryColor, width: 2),
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  BottomBtn(
-                    text: 'Home',
-                    icon: Icons.home_outlined,
-                  ),
-                  const Icon(
-                    Icons.location_city_outlined,
-                    color: kSecondaryColor,
-                  ),
-                  const Icon(
-                    Icons.calendar_month_outlined,
-                    color: kSecondaryColor,
-                  ),
-                  const Icon(
-                    Icons.task_alt_outlined,
-                    color: kSecondaryColor,
-                  ),
-                  const Icon(
-                    Icons.more_horiz_outlined,
-                    color: kSecondaryColor,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: Container(
+          //     height: 8.h,
+          //     padding: const EdgeInsets.symmetric(horizontal: 10),
+          //     margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
+          //     decoration: BoxDecoration(
+          //       color: kLightBGColor,
+          //       border: Border.all(color: kLPrimaryColor, width: 2),
+          //       borderRadius: BorderRadius.circular(40),
+          //     ),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //       children: [
+          //         BottomBtn(
+          //           text: 'Home',
+          //           icon: Icons.home_outlined,
+          //         ),
+          //         const Icon(
+          //           Icons.location_city_outlined,
+          //           color: kSecondaryColor,
+          //         ),
+          //         const Icon(
+          //           Icons.calendar_month_outlined,
+          //           color: kSecondaryColor,
+          //         ),
+          //         const Icon(
+          //           Icons.task_alt_outlined,
+          //           color: kSecondaryColor,
+          //         ),
+          //         const Icon(
+          //           Icons.more_horiz_outlined,
+          //           color: kSecondaryColor,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

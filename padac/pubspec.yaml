@@ -16,7 +16,9 @@ dependencies:
   sizer: ^2.0.15
   cupertino_icons: ^1.0.2
   firebase_database: ^9.0.12
+  cloud_firestore: ^3.1.14
   firebase_core: ^1.15.0
+  fl_chart: ^0.50.1
 
 dev_dependencies:
   flutter_test:

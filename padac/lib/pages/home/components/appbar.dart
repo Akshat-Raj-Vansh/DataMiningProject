@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:padac/pages/auth/components/login_screen.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../utils/constants.dart';
@@ -34,26 +36,31 @@ class CustomAppBar extends StatelessWidget {
               ],
             ),
           ),
-          const Icon(
-            Icons.notification_add_outlined,
-            color: kPrimaryColor,
+          // const Icon(
+          //   Icons.notification_add_outlined,
+          //   color: kPrimaryColor,
+          // ),
+          // SizedBox(
+          //   width: 2.w,
+          // ),
+          // const Icon(
+          //   Icons.handshake_outlined,
+          //   color: kPrimaryColor,
+          // ),
+          // SizedBox(
+          //   width: 2.w,
+          // ),
+          IconButton(
+            onPressed: () {
+              Get.off(LoginScreen());
+            },
+            icon: const Icon(
+              Icons.logout_outlined,
+              color: kPrimaryColor,
+            ),
           ),
           SizedBox(
-            width: 2.w,
-          ),
-          const Icon(
-            Icons.handshake_outlined,
-            color: kPrimaryColor,
-          ),
-          SizedBox(
-            width: 2.w,
-          ),
-          const Icon(
-            Icons.person_outline,
-            color: kPrimaryColor,
-          ),
-          SizedBox(
-            width: 5.w,
+            width: 3.w,
           ),
         ],
       ),
