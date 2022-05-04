@@ -74,21 +74,17 @@ class SoilContent extends StatelessWidget {
           ),
           SizedBox(height: 1.h),
           Container(
-            height: 30.h,
-            width: 80.w,
+            height: 40.h,
+            width: 90.w,
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            margin: EdgeInsets.symmetric(horizontal: 2.h, vertical: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-                border: Border.all(color: kLPrimaryColor, width: 2)),
+            margin: EdgeInsets.symmetric(horizontal: 2.w, vertical: 10),
             child: Center(
               child: Container(
                 padding: const EdgeInsets.all(10),
                 width: double.infinity,
                 child: LineChart(
                   LineChartData(
-                    borderData: FlBorderData(show: false),
+                    borderData: FlBorderData(show: true),
                     lineBarsData: [
                       // The red line
                       LineChartBarData(

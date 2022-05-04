@@ -124,8 +124,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextButton(
               onPressed: () {
-                // Get.to(() => RegisterScreen(),
-                //     transition: Transition.rightToLeftWithFade);
+                Get.to(() => RegisterScreen(),
+                    transition: Transition.rightToLeftWithFade);
               },
               child: Center(
                 child: Text(

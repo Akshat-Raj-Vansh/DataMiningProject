@@ -13,49 +13,49 @@ class Summary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                margin: EdgeInsets.symmetric(horizontal: 2.h),
-                child: Text(
-                  'Weather forecast',
-                  textAlign: TextAlign.start,
-                  style: GoogleFonts.jockeyOne(
-                      fontSize: 16.sp, color: kPrimaryColor),
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              margin: EdgeInsets.symmetric(horizontal: 2.h),
-              child: const Icon(
-                Icons.keyboard_arrow_right,
-                color: kPrimaryColor,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 1.h),
-        Container(
-          height: 100,
-          width: 80.w,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          margin: EdgeInsets.symmetric(horizontal: 2.h, vertical: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-              border: Border.all(color: kLPrimaryColor, width: 2)),
-          child: Center(
-            child: Text(
-              'Today, 12th July 2020',
-              textAlign: TextAlign.start,
-              style:
-                  GoogleFonts.montserrat(fontSize: 12.sp, color: kPrimaryColor),
-            ),
-          ),
-        ),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       child: Container(
+        //         padding: const EdgeInsets.symmetric(horizontal: 10),
+        //         margin: EdgeInsets.symmetric(horizontal: 2.h),
+        //         child: Text(
+        //           'Weather forecast',
+        //           textAlign: TextAlign.start,
+        //           style: GoogleFonts.jockeyOne(
+        //               fontSize: 16.sp, color: kPrimaryColor),
+        //         ),
+        //       ),
+        //     ),
+        //     Container(
+        //       padding: const EdgeInsets.symmetric(horizontal: 10),
+        //       margin: EdgeInsets.symmetric(horizontal: 2.h),
+        //       child: const Icon(
+        //         Icons.keyboard_arrow_right,
+        //         color: kPrimaryColor,
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // SizedBox(height: 1.h),
+        // Container(
+        //   height: 100,
+        //   width: 80.w,
+        //   padding: const EdgeInsets.symmetric(horizontal: 10),
+        //   margin: EdgeInsets.symmetric(horizontal: 2.h, vertical: 10),
+        //   decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(10),
+        //       color: Colors.white,
+        //       border: Border.all(color: kLPrimaryColor, width: 2)),
+        //   child: Center(
+        //     child: Text(
+        //       'Today, 12th July 2020',
+        //       textAlign: TextAlign.start,
+        //       style:
+        //           GoogleFonts.montserrat(fontSize: 12.sp, color: kPrimaryColor),
+        //     ),
+        //   ),
+        // ),
         SizedBox(height: 3.h),
         Row(
           children: [

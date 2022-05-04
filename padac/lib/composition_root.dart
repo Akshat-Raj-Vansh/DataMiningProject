@@ -27,7 +27,7 @@ class CompositionRoot {
   static Future<Widget> start() async {
     Token token = await localStore.getToken();
     // return token == null ? splashScreen() : createHomeUI();
-    return createHomeUI();
+    return splashScreen();
   }
 
   static Widget splashScreen() {

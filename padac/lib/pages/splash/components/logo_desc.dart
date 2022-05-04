@@ -10,8 +10,10 @@ import 'package:sizer/sizer.dart';
 class LogoDesc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 2),
-        () => Get.off(() => LoginScreen(), transition: Transition.fadeIn));
+    Timer(
+      const Duration(seconds: 4),
+      () => Get.off(() => LoginScreen(), transition: Transition.fadeIn),
+    );
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
